@@ -11,7 +11,6 @@ class PostDataSourceImpl (db: CoroutineDatabase) : PostDataSource{
 
     private val postsCollection = db.getCollection<Post>()
 
-
     override suspend fun createPost(post: Post): Boolean {
         return postsCollection.insertOne(
             Post(
@@ -46,5 +45,4 @@ class PostDataSourceImpl (db: CoroutineDatabase) : PostDataSource{
     override suspend fun deletePost(postId: String): Boolean {
         return postsCollection.deleteOne(Post::postId eq postId).wasAcknowledged()
     }
-
 }
