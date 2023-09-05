@@ -1,14 +1,15 @@
 package ipsum_amet.data.models.repository
 
+import com.mongodb.client.model.Updates.set
 import ipsum_amet.data.models.Post
 import org.litote.kmongo.coroutine.CoroutineDatabase
-import org.litote.kmongo.coroutine.insertOne
 import org.litote.kmongo.eq
-import org.litote.kmongo.setValue
+import org.litote.kmongo.set
+import org.litote.kmongo.setTo
 
 class PostDataSourceImpl (db: CoroutineDatabase) : PostDataSource{
 
-    val postsCollection = db.getCollection<Post>()
+    private val postsCollection = db.getCollection<Post>()
 
 
     override suspend fun createPost(post: Post): Boolean {
@@ -31,14 +32,19 @@ class PostDataSourceImpl (db: CoroutineDatabase) : PostDataSource{
     }
 
     override suspend fun updatePost(post: Post): Boolean {
-        TODO("Not yet implemented")
+        val postIdFilter = Post::postId eq post.postId
+        val updateOperation = set(
+            Post::whomPosted setTo post.whomPosted,
+            Post::postMessage setTo post.postMessage,
+            Post::whenPosted setTo post.whenPosted
+        )
+
+        val updateResult = postsCollection.updateOne(postIdFilter, updateOperation)
+        return updateResult.wasAcknowledged()
     }
-
-
 
     override suspend fun deletePost(postId: String): Boolean {
-        TODO("Not yet implemented")
+        return postsCollection.deleteOne(Post::postId eq postId).wasAcknowledged()
     }
-
 
 }
