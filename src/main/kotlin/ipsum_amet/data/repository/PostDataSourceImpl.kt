@@ -1,11 +1,11 @@
 package ipsum_amet.data.models.repository
 
-import com.mongodb.client.model.Updates.set
 import ipsum_amet.data.models.Post
 import org.litote.kmongo.coroutine.CoroutineDatabase
 import org.litote.kmongo.eq
 import org.litote.kmongo.set
 import org.litote.kmongo.setTo
+import java.util.UUID
 
 class PostDataSourceImpl (db: CoroutineDatabase) : PostDataSource{
 
@@ -39,7 +39,7 @@ class PostDataSourceImpl (db: CoroutineDatabase) : PostDataSource{
         )
 
         val updateResult = postsCollection.updateOne(postIdFilter, updateOperation)
-        return updateResult.wasAcknowledged()
+        return updateResult.matchedCount > 0
     }
 
     override suspend fun deletePost(postId: String): Boolean {

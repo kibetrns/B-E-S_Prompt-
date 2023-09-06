@@ -4,6 +4,7 @@ import ipsum_amet.data.models.Post
 import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.toJavaLocalDateTime
 import kotlinx.serialization.Serializable
+import org.bson.types.ObjectId
 
 @Serializable
 data class PostDTO(
@@ -15,9 +16,9 @@ data class PostDTO(
 
 fun PostDTO.toPost(): Post {
     return Post(
-        postId = postId,
-        whomPosted = whomPosted,
-        postMessage = postMessage,
-        whenPosted = whenPosted.toJavaLocalDateTime()
-    )
+            postId = postId,
+            whomPosted = whomPosted,
+            postMessage = postMessage,
+            whenPosted = whenPosted.toJavaLocalDateTime()
+        )
 }

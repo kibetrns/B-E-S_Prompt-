@@ -3,6 +3,7 @@ package ipsum_amet.data.models
 import ipsum_amet.data.models.remote.dtos.PostDTO
 import kotlinx.datetime.toKotlinLocalDateTime
 import java.time.LocalDateTime
+import kotlin.reflect.KProperty0
 
 data class Post(
     val postId: String,

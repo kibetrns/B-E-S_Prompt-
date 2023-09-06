@@ -1,6 +1,8 @@
 package ipsum_amet.data.models
 
 import ipsum_amet.data.models.remote.dtos.UserDTO
+import kotlinx.datetime.toKotlinLocalDateTime
+import org.bson.types.ObjectId
 import java.time.LocalDateTime
 
 data class User(
@@ -18,7 +20,7 @@ fun User.toDTO(): UserDTO {
         userName = userName,
         email = email,
         password = password,
-        accountCreated = accountCreated,
+        accountCreated = accountCreated.toKotlinLocalDateTime(),
         accountStatus =  accountStatus
     )
 }

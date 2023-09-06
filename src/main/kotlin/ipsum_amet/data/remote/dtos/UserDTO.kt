@@ -2,8 +2,12 @@ package ipsum_amet.data.models.remote.dtos
 
 import ipsum_amet.data.models.User
 import ipsum_amet.data.models.UserAccountStatus
-import java.time.LocalDateTime
+import kotlinx.datetime.LocalDateTime
+import kotlinx.datetime.toJavaLocalDateTime
+import kotlinx.serialization.Serializable
+import org.bson.types.ObjectId
 
+@Serializable
 data class UserDTO(
     val userId: String,
     val userName: String,
@@ -19,7 +23,7 @@ fun UserDTO.toUser() : User {
         userName = userName,
         email = email,
         password = password,
-        accountCreated = accountCreated,
+        accountCreated = accountCreated.toJavaLocalDateTime(),
         accountStatus = accountStatus
     )
 }
