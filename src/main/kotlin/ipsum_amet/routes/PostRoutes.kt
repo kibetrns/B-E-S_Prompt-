@@ -13,15 +13,13 @@ import java.util.*
 fun Route.createPost(application: Application, postService: PostService) {
 
     post("post") {
-        
+
         try {
-            val uniquePostId = UUID.randomUUID().toString()
 
             val request = call.receive<PostDTO>()
 
-
             val postDTO  = PostDTO(
-                postId = uniquePostId,
+                postId = request.postId,
                 whomPosted = request.whomPosted,
                 postMessage =  request.postMessage,
                 whenPosted = request.whenPosted
@@ -57,7 +55,7 @@ fun Route.getPostByPostId(application: Application, postService: PostService) {
         val postId = call.request.queryParameters["postId"] ?: ""
 
         try {
-            val result = postService.getPostByPostId(postId = postId)
+            val result =  postService.getPostByPostId(postId = postId)
             if (result != null) {
                 call.respond(HttpStatusCode.OK, result)
             } else {
@@ -68,6 +66,7 @@ fun Route.getPostByPostId(application: Application, postService: PostService) {
         }
     }
 }
+
 
 
 fun Route.updatePost(application: Application, postService: PostService) {
